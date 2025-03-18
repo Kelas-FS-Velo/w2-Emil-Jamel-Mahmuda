@@ -14,9 +14,23 @@ interface Profile {
   social: Social,
 }
 
-const { data: profile, status, error } = useFetch<Profile>('http://localhost:3000/profile.json')
+const { data: profile, refresh, error, status } = useFetch<Profile>('http://127.0.0.1:8000/api/profile')
 
 const pending = computed(() => status.value === 'pending')
+
+const onRefreshHandler = () => {
+  refresh()
+}
+
+const toast = useToast()
+
+const onConnectHandler = () => {
+  toast.add({
+    title: 'Successfully',
+    description: 'You are now connected with this profile',
+    icon: 'i-lucide-check'
+  })
+}
 
 useHead({
   title: 'Profile Page',
@@ -58,7 +72,13 @@ useHead({
             {{ error?.statusCode }} - {{ error?.message }}
           </p>
 
-          <UButton class="w-full justify-center mt-6" color="error" variant="solid" size="xl">
+          <UButton 
+            class="w-full justify-center mt-6" 
+            color="error" 
+            variant="solid" 
+            size="xl"
+            @click="onRefreshHandler"
+          >
             Try Again
           </UButton>
         </template>
@@ -123,7 +143,13 @@ useHead({
             />
           </div>
 
-          <UButton class="w-full justify-center mt-6" color="primary" variant="solid" size="xl">
+          <UButton 
+            class="w-full justify-center mt-6" 
+            color="primary" 
+            variant="solid" 
+            size="xl"
+            @click="onConnectHandler"
+          >
             Connect
           </UButton>
         </template>
