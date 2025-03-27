@@ -2,16 +2,15 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class Catalog extends Model
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, HasUuids, Notifiable;
 
     /**
@@ -19,7 +18,7 @@ class User extends Authenticatable
      *
      * @var string
      */
-    protected $table = 'users';
+    protected $table = 'catalogs';
 
      /**
      * The primary key associated with the table.
@@ -52,43 +51,34 @@ class User extends Authenticatable
     /**
      * The attributes that are mass assignable.
      *
-     * @var list<string>
+     * @var array<int, string>
      */
     protected $fillable = [
         'name',
-        'email',
-        'password',
-        'role',
+        'description',
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
+     * Get the books for the catalog.
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    public function books(): HasMany
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->hasMany(Book::class);
+    }   
+
+    /**
+     * Get the journals for the catalog.
+     */
+    public function journals(): HasMany
+    {
+        return $this->hasMany(Journal::class);
     }
 
     /**
-     * Get the recommendations for the user.
+     * Get the inventory associated with the catalog.
      */
-    public function recommendations(): HasMany
+    public function inventory(): HasOne
     {
-        return $this->hasMany(Recommendation::class);
+        return $this->hasOne(Inventory::class);
     }
 }
