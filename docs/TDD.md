@@ -121,6 +121,7 @@ The system will follow a layered architecture:
 | publish_date | DATE           | NOT NULL                                              |
 | price        | DECIMAL(10,2)  | NOT NULL                                              |
 | quantity     | INT            | NOT NULL                                              |
+| cover        | VARCHAR(255)   | NULL                                                  |
 | created_at   | TIMESTAMP      | DEFAULT CURRENT_TIMESTAMP                             |
 | updated_at   | TIMESTAMP      | DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP |
 
@@ -131,6 +132,7 @@ The system will follow a layered architecture:
 | id           | VARCHAR(255)   | Primary Key                                           |
 | catalog_id   | VARCHAR(255)   | Foreign Key                                           |
 | title        | VARCHAR(255)   | NOT NULL                                              |
+| author       | VARCHAR(255)   | NOT NULL                                              |
 | publisher    | VARCHAR(255)   | NOT NULL                                              |
 | issn         | VARCHAR(20)    | UNIQUE, NOT NULL                                      |
 | publish_date | DATE           | NOT NULL                                              |
@@ -177,8 +179,8 @@ The system will follow a layered architecture:
 | ------------ | -------------- | ----------------------------------------------------- |
 | id           | VARCHAR(255)   | Primary Key                                           |
 | user_id      | VARCHAR(255)   | Foreign Key                                           |
-| book_id      | VARCHAR(255)   | Foreign Key, NULLABLE                                 |
-| journal_id   | VARCHAR(255)   | Foreign Key, NULLABLE                                 |
+| book_id      | VARCHAR(255)   | NULLABLE                                              |
+| journal_id   | VARCHAR(255)   | NULLABLE                                              |
 | reason       | TEXT           | NOT NULL                                              |
 | created_at   | TIMESTAMP      | DEFAULT CURRENT_TIMESTAMP                             |
 | updated_at   | TIMESTAMP      | DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP |
